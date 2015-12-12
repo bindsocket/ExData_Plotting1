@@ -1,0 +1,20 @@
+plot4 <- function() {
+  source('plot2.R')
+  source('plot3.R')
+  library(data.table)
+  dset <- data.table(fread('hpc.txt')) #Trimmed file to only contain 2007-02-01 -> 2007-02-02
+  xseq <- 1:length(dset$Time)
+  xrange <- c(min(xseq),max(xseq))
+  xlabels <- c('Thu','Fri','Sat')
+  png('plot4.png',width=480,height=480)
+  par(mfrow=c(2,2))
+  plot2(FALSE)
+  plot(xseq,dset$Voltage,axes=FALSE,xlab='datetime',ylab='Voltage',type='l',frame.plot=TRUE)
+  axis(1,at=c(xrange[1],xrange[2]/2,xrange[2]),labels=c('Thu','Fri','Sat'))
+  axis(2)
+  plot3(FALSE)
+  plot(xseq,dset$Global_reactive_power,xlab='datetime',ylab='Global_reactive_power',axes=FALSE,frame.plot=TRUE,type='l')
+  axis(1,at=c(xrange[1],xrange[2]/2,xrange[2]),labels=c('Thu','Fri','Sat'))
+  axis(2)
+  dev.off()
+}
